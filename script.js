@@ -11,6 +11,10 @@ function watchForm(){
    
     $('form').on('submit', function(event){
         event.preventDefault();
+        // event.stopPropogation();
+        if($('.number-value').val()>50){
+            return alert('Please choose a valid number');
+        }
         store.number= $('.number-value').val();
         console.log(store.number);
         getDogImages(store.number);
@@ -27,7 +31,6 @@ function getDogImages(num){
 function makeDogArray(responseJson){
     store.dogArray = responseJson.message;
     console.log(store.dogArray);
-   
 }
 
 function makeHtml(){
