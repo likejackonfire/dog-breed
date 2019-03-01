@@ -20,11 +20,12 @@ function getDogImages(userNumber){
         .then(response => response.json())
         .then(responseJson => 
             displayResults(responseJson))
+            .catch(error => alert('Something went wrong. Try again later.'));
 }
 
 function displayResults(responseJson){
     console.log(responseJson);
-    $('.results').html(
+    $('.results').replaceWith(
         `<img src="${responseJson.message}" class="results">`
       )
 
