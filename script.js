@@ -9,9 +9,9 @@ function watchForm(){
     // default is set to three, user can choose between 1 and 50  
     $('form').on('submit', function(event){
         event.preventDefault();
-        const userNumber= $('.number-value').val();
-        console.log(userNumber);
-        getDogImages(userNumber);
+        store.number= $('.number-value').val();
+        console.log(store.number);
+        getDogImages(store.number);
     })
 
 }
