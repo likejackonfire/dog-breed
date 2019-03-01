@@ -13,18 +13,18 @@ function watchForm(){
         console.log(store.number);
         getDogImages(store.number);
     })
-
 }
 
 function getDogImages(userNumber){
     fetch(`https://dog.ceo/api/breeds/image/random/${userNumber}`)
         .then(response => response.json())
-            .then(responseJson => displayResults(responseJson))
+        .then(responseJson => 
+            displayResults(responseJson))
 }
 
-function displayResults(){
+function displayResults(responseJson){
     console.log(responseJson);
-    $('.results').replaceWith(
+    $('.results').html(
         `<img src="${responseJson.message}" class="results">`
       )
 
