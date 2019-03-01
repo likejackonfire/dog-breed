@@ -16,8 +16,8 @@ function watchForm(){
     })
 }
 
-function getDogImages(userNumber){
-    fetch(`https://dog.ceo/api/breeds/image/random/${userNumber}`)
+function getDogImages(num){
+    fetch(`https://dog.ceo/api/breeds/image/random/${num}`)
         .then(response => response.json())
         .then(responseJson => 
             displayResults(responseJson))
@@ -25,6 +25,7 @@ function getDogImages(userNumber){
 }
 
 function displayResults(responseJson){
+    for(let x = 0; x < responseJson.message.length; x++);
     console.log(responseJson);
     $('.results').replaceWith(
         `<img src="${responseJson.message}" class="results">`
