@@ -1,14 +1,16 @@
 'use strict';
 
-
+const store = {
+    number: 0,
+}
 
 function watchForm(){
     // // this function listens to the input element in the html. 
     // default is set to three, user can choose between 1 and 50  
-    $('form').submit(function(event){
+    $('form').on('submit', function(event){
         event.preventDefault();
         const userNumber= $('.number-value').val();
-        console.log(number);
+        console.log(userNumber);
         getDogImages(userNumber);
     })
 
