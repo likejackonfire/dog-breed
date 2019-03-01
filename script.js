@@ -7,6 +7,7 @@ const store = {
 function watchForm(){
     // // this function listens to the input element in the html. 
     // default is set to three, user can choose between 1 and 50  
+    const userNumber = 3;
     $('form').on('submit', function(event){
         event.preventDefault();
         store.number= $('.number-value').val();
@@ -20,11 +21,12 @@ function getDogImages(userNumber){
         .then(response => response.json())
         .then(responseJson => 
             displayResults(responseJson))
+            .catch(error => alert('Something went wrong. Try again later.'));
 }
 
 function displayResults(responseJson){
     console.log(responseJson);
-    $('.results').html(
+    $('.results').replaceWith(
         `<img src="${responseJson.message}" class="results">`
       )
 
