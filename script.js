@@ -17,4 +17,15 @@ function displayResults(){
 function watchForm(){
     // // this function listens to the input element in the html. 
     // default is set to three, user can choose between 1 and 50  
+    $('form').on('submit', function(event){
+        event.preventDefault();
+        const number= $('.number-value').val();
+        console.log(number);
+    })
+
 }
+
+$(function() {
+    console.log('App loaded! good job!');
+    watchForm();
+  });
