@@ -11,7 +11,6 @@ function watchForm(){
    
     $('form').on('submit', function(event){
         event.preventDefault();
-        // event.stopPropogation();
         if($('.number-value').val()>50){
             return alert('Please choose a valid number');
         }
