@@ -1,51 +1,66 @@
 'use strict';
 
-const store = {
-    number: 0,
-    dogArray:[],
+
+const STORE = {
+    userNumber: 0,
+    dogArray: [],
+    breedSearch: [],
+    breedArray: []
+
 }
 
-function watchForm(){
-    // // this function listens to the input element in the html. 
-    // default is set to three, user can choose between 1 and 50  
-   
-    $('form').on('submit', function(event){
-        event.preventDefault();
-        if($('.number-value').val()>50){
-            return alert('Please choose a valid number');
-        }
-        store.number= $('.number-value').val();
-        console.log(store.number);
-        getDogImages(store.number);
-    })
+function handleNumberSubmit() {
+    $('#js-number-entry').submit('.user-number', event => {
+      event.preventDefault();
+      ($('.user-number').val()=== '') ? $('.user-number').val(3):
+      ($('.user-number').val() > 50 || $('.user-number').val() < 1) ? alert('Please choose a valid number') :
+      STORE.userNumber = $('.user-number').val();
+      getDogImages(STORE.userNumber);
+  })
+}
+// ************* Number functions **************** //
+
+function getDogImages(number) {
+  fetch(`https://dog.ceo/api/breeds/image/random/${number}`)
+    .then(response => response.json())
+    .then(jsonObj => displayNumber(jsonObj))
+    .catch(error => alert('Something happened! Try again.'));
 }
 
-function getDogImages(num){
-    fetch(`https://dog.ceo/api/breeds/image/random/${num}`)
-        .then(response => response.json())
-        .then(responseJson => makeDogArray(responseJson)).then(displayResults)
-            .catch(error => alert('Something went wrong. Try again later.'));
+function displayNumber(x) {
+STORE.dogArray = x.message;
+  $('.results').replaceWith(makeHtml(STORE.dogArray));
 }
 
-function makeDogArray(responseJson){
-    store.dogArray = responseJson.message;
-    console.log(store.dogArray);
+function makeHtml(arr){
+    return arr.map(i => `<img src="${i}" class="results">` );
+} 
+
+
+// ************* Breed functions **************** //
+
+function handleBreedSubmit(){
+  $('#js-breed-entry').submit('.breed-search', event =>{
+    event.preventDefault();
+    STORE.breedSearch = $('.breed-search').val();
+    getDogBreed(STORE.breedSearch);
+  })
+}
+function getDogBreed(breed){
+  fetch(`https://dog.ceo/api/breed/${breed}/images`)
+      .then(response =>  response.json())
+      .then(jsonObj => displayBreed(jsonObj))
+      .catch(error => alert('Something happened! Try again some other time.'));
+}
+function displayBreed(x){
+  (x.status === "error") ? alert(`${x.message}. Please try again`): 
+  STORE.breedArray = x.message[15];
+  $('.results').replaceWith(`<img src="${STORE.breedArray}" class="results">`);
 }
 
-function makeHtml(){
-    let newArr=[];
-    for(let x = 0; x < store.dogArray.length; x++){
-        newArr.push(`<img src="${store.dogArray[x]}" class="results">`)
-}
-   return newArr;
-}    
-
-function displayResults(responseJson){
-    $('.results').replaceWith(makeHtml())}
-
-
+// ************* doc ready functions **************** //
 $(function() {
-    console.log('App loaded! good job!');
-    watchForm();
-    
-  });
+  console.log('App loaded! Waiting for submit!');
+  handleNumberSubmit();
+  handleBreedSubmit();
+}); 
